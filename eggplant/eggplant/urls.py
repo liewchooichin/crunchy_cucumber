@@ -21,7 +21,13 @@ from django.conf.urls.static import static
 
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    # default admin
+    path(route='admin/', view=admin.site.urls, name="admin"),
+    # django_browser_reload
+    path(route="__reload__/", 
+         view=include("django_browser_reload.urls"), name="reload"),
+    # index homepage
+    path(route="polls/", view=include("polls.urls"), name="polls"),
 ]
 
 

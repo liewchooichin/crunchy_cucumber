@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'corsheaders',
     # apps in the projects
+    'polls.apps.PollsConfig',
 ]
 
 # Following the cors example

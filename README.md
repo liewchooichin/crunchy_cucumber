@@ -1,23 +1,129 @@
 # My Notes
 
-A simple app to understand the Django test functions and other features.
+## Background
+A simple app to understand the Django test functions and other features. Using a tutorial from [django tutorial](https://docs.djangoproject.com/en/5.0/intro/tutorial01/) to learn more about the concepts that I find difficult to grasp in **ponderous_grasshopper**. I will start this new project to learn about tests.
+
+## The **polls** app
+
+About the **poll** application, 
+
+- Question “index” page – displays the latest few questions.
+- Question “detail” page – displays a question text, with no results but with a form to vote.
+- Question “results” page – displays results for a particular question.
+- Vote action – handles voting for a particular choice in a particular question.
+
+# My Notes
 
 
 
 
 
 
+
+
+## **reverse()
+
+To get the url:
+
+```
+from django.http import HttpResponseRedirect
+from django.urls import reverse
+# must include the trailing **,** in the args=()
+reverse('polls-detail', args=(9, ))
+'/polls/9/'
+reverse('polls-results', args=(9,))
+'/polls/9/results/'
+reverse('polls-vote', args=(9,))
+'/polls/9/vote/'
+# with namespace specified
+reverse('admin:index')
+'/admin/'
+reverse("polls:polls-index")
+'/polls/'
+reverse("polls:polls-vote", args=(0, ))
+'/polls/0/vote/'
+```
+
+[Namespaced URLs](https://docs.djangoproject.com/en/5.0/topics/http/urls/#term-instance-namespace) are specified using the ':' operator. For example, the main index page of the admin application is referenced using 'admin:index'. This indicates a namespace of 'admin', and a named URL of 'index'.
+
+Namespaces can also be nested. The named URL 'sports:polls:index' would look for a pattern named 'index' in the namespace 'polls' that is itself defined within the top-level namespace 'sports'.
+
+The current application can be found from the `request.current_app` attribute.
+
+Namespace can be specified in two ways:
+```
+from django.urls import path
+
+from . import views
+
+app_name = "polls"
+urlpatterns = [
+    path("", views.IndexView.as_view(), name="index"),
+    path("<int:pk>/", views.DetailView.as_view(), name="detail"),
+    ...,
+]
+
+# Or, in the main urls.py
+from django.urls import include, path
+
+urlpatterns = [
+    path("author-polls/", include("polls.urls", namespace="author-polls")),
+    path("publisher-polls/", include("polls.urls", namespace="publisher-polls")),
+]
+```
+
+## Register app in the **admin**
+
+For example, we need to tell the **admin** that **Question** objects have an admin interface. To do this, open the **polls/admin.py** file, and edit it to look like this:
+
+```
+# polls/admin.py
+from django.contrib import admin
+
+from .models import Question
+
+admin.site.register(Question)
+```
+
+## To see the SQL migration commands
+
+The `0001` is the migration number. It prints it to the screen so that you can see what SQL Django thinks is required. It’s useful for checking what Django is going to do.
+
+`python manage.py sqlmigrate polls 0001`
+
+- By convention, Django appends "_id" to the foreign key field name.
+- The **migrate** command takes all the migrations that haven’t been applied (Django tracks which ones are applied using a special table in your database called **django_migrations**) and runs them against your database - essentially, synchronizing the changes you made to your models with the schema in the database.
+
+
+## **INSTALLED_APPS** and **migrate**
+
+The **migrate** command looks at the **INSTALLED_APPS** setting and creates any necessary database tables.
+
+In the **INSTALLED_APPS**, it is possible to use:
+`polls` or `polls.apps.PollsConfig`. The **PollsConfig** class is in the **polls/apps.py** file, so its dotted path is **'polls.apps.PollsConfig'**. 
 
 
 ## Browser reload
 
-Browser will only work when there is an app.
+Browser reload module will only work when there is a mapping of urls.
+
+There will see an exception: 
+`django.urls.exceptions.NoReverseMatch: 'django_browser_reload' is not a registered namespace`
 
 ```
+# URLconf
+urlpatterns = [
+    ...,
+    path("__reload__/", include("django_browser_reload.urls")),
+]
+
+# settings.py
 # for browser reload
-    #'django_browser_reload',
+#'django_browser_reload',
 # for browser reload
-    #'django_browser_reload.middleware.BrowserReloadMiddleware',
+# The middleware should be listed after any others that encode the 
+# response, such as Django’s GZipMiddleware.
+#'django_browser_reload.middleware.BrowserReloadMiddleware',
 ```
 
 ## Create a default settings template
