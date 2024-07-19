@@ -9,7 +9,16 @@ A simple app to understand the Django test functions and other features.
 
 
 
+## Browser reload
 
+Browser will only work when there is an app.
+
+```
+# for browser reload
+    #'django_browser_reload',
+# for browser reload
+    #'django_browser_reload.middleware.BrowserReloadMiddleware',
+```
 
 ## Create a default settings template
 19 Jul
