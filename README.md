@@ -18,7 +18,9 @@ About the **poll** application,
 
 
 
+## Run tests
 
+`python manage.py test polls.tests`
 
 
 ## **reverse()
