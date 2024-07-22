@@ -25,7 +25,7 @@ def question_list(request):
     return HttpResponse(template.render(context, request))
 
 
-def detail(request, question_id):
+def question_detail(request, question_id):
     """Detail of a question"""
     try:
         question = Question.objects.get(id=question_id)

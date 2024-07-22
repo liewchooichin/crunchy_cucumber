@@ -6,19 +6,26 @@
 {% endblock title %}
 
 {% block content %}
-  <h1>Question {{ question.id }}</h1>
-
+  
   {% if question %}
+  <h1>Question {{ question.id }}:</h1>
+
+  <p>
+    <h3>{{ question.question_text}}</h3>
+  </p>
+
+  <p>
+    <h2>Choices</h2>
     <ul class="list-group">
-        {{ question.question_text }}
-        {% for item in question.choices_set.all %}
+        {% for item in question.choice_set.all %}
         <li class="list-group-item">
-            {{ item.choice_test }}
+            {{ item.choice_text }}
         </li>
         {% empty %}
         <li class="list-group-item">No choices in this question.</li>
         {% endfor %}
     </ul>
+    </p>
   {% endif %}
 
 {% endblock content %}

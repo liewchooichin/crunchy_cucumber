@@ -14,9 +14,6 @@ urlpatterns = [
     # homepage: /polls/
     path("", polls_views.index, 
          name="index"),
-    # detail of question: /polls/5
-    path("<int:question_id>/", polls_views.detail, 
-         name="detail"),
     # results of a question: /<int:question_id>/results/
     path("<int:question_id>/results/", polls_views.results, 
          name="results"),
@@ -26,4 +23,7 @@ urlpatterns = [
      # list the questions
      path("question_list/", polls_views.question_list,
           name="question_list"),
+     # detail of question: /polls/5
+     path("<int:question_id>/", polls_views.question_detail, 
+         name="question_detail"),
 ]
