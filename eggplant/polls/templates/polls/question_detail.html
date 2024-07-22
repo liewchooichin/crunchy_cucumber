@@ -1,0 +1,24 @@
+<!--polls/index.html-->
+{% extends "base.html" %}
+
+{% block title %}
+  {{ block.super }} {{ title }}
+{% endblock title %}
+
+{% block content %}
+  <h1>Question {{ question.id }}</h1>
+
+  {% if question %}
+    <ul class="list-group">
+        {{ question.question_text }}
+        {% for item in question.choices_set.all %}
+        <li class="list-group-item">
+            {{ item.choice_test }}
+        </li>
+        {% empty %}
+        <li class="list-group-item">No choices in this question.</li>
+        {% endfor %}
+    </ul>
+  {% endif %}
+
+{% endblock content %}

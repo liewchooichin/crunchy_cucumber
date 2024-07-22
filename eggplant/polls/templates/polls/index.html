@@ -1,0 +1,17 @@
+<!--polls/index.html-->
+{% extends "base.html" %}
+
+{% block title %}
+  {{ block.super }} {{ title }}
+{% endblock title %}
+
+{% block content %}
+  <h1>Eggplant polls</h1>
+  <p>
+    <ul class="list-group">
+        <li class="list-group-item">
+          <a href="{% url 'polls:question_list' %}">Poll questions</a>
+        </li>
+    </ul>
+  </p>
+{% endblock content %}

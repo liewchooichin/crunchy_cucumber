@@ -19,15 +19,21 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
-
+# Namespcae
+# The namespace is added to the include(). It is clearer
+# to add namespace in include() because it can be seen
+# in one glance this include file is associated with this
+# namespace.
 urlpatterns = [
     # default admin
     path(route='admin/', view=admin.site.urls, name="admin"),
     # django_browser_reload
     path(route="__reload__/", 
-         view=include("django_browser_reload.urls"), name="reload"),
+         view=include("django_browser_reload.urls")),
     # index homepage
-    path(route="polls/", view=include("polls.urls"), name="polls"),
+    path(route="polls/", 
+         view=include("polls.urls", namespace="polls")),
+    
 ]
 
 
