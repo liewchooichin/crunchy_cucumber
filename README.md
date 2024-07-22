@@ -15,8 +15,23 @@ About the **poll** application,
 # My Notes
 
 
+## collectstatic
 
+Need to run
 
+```python manage.py collectstatic``` 
+
+for the `{% static 'some_image' %}` to work.
+
+The **base.html** must be in the **project level** templates directory. In this app, this is **\eggplant\templates\base.html**.
+
+The app **polls** templates is in **\polls\templates\polls\index.html** and etc. The **static** folder is in **\polls\static\logo.svg**.
+
+The `favicon.svg` and the logo are using the <em>same</em> svg file. But, the filename must be specified separately. For example, the the logo name must be named something like `logo.svg`.
+
+In the **base.html**, remember to put in the static template tag at the end of the file where the javascript is specified.
+
+```<script defer src={% static "main.js" %}></script>```
 
 ## Run tests
 
