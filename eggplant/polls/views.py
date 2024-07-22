@@ -1,4 +1,5 @@
 from django.shortcuts import render, redirect
+from django.shortcuts import get_list_or_404, get_object_or_404
 from django.http import HttpResponse, Http404
 from django.template import loader
 
@@ -27,10 +28,7 @@ def question_list(request):
 
 def question_detail(request, question_id):
     """Detail of a question"""
-    try:
-        question = Question.objects.get(id=question_id)
-    except Question.DoesNotExist:
-        raise Http404(f"Question {question_id} does not exist")
+    question = get_object_or_404(Question, id=question_id)
     template = loader.get_template("polls/question_detail.html")
     context = {
         "title": "Question detail",
