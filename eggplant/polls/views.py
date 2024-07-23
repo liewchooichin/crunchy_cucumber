@@ -37,6 +37,20 @@ def question_detail(request, question_id):
     return HttpResponse(template.render(context, request))
 
 
+def question_vote(request, question_id):
+    """Vote for a question, similar to detail of a question.
+       But this view has a vote button.
+    """
+    question = get_object_or_404(Question, id=question_id)
+    template = loader.get_template("polls/question_vote.html")
+    context = {
+        "title": "Question vote",
+        "question": question,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+
 def results(request, question_id):
     response = f"You're looking at the results of question {question_id}."
     return HttpResponse(response)

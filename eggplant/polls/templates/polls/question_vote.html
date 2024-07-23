@@ -1,0 +1,40 @@
+<!--polls/index.html-->
+{% extends "base.html" %}
+
+{% block title %}
+  {{ block.super }} {{ title }}
+{% endblock title %}
+
+{% block content %}
+  <h1>Vote</h1>
+  
+  <form action="{% url 'polls:question_vote' question.id %}" method="POST">
+    {% csrf_token %}
+    <fieldset>
+      <legend><h1>{{ question.question_text }}</h1></legend>
+      
+        {% if error_message %}
+          <p><strong>{{ error_message }}</strong></p>
+        {% endif %}
+        
+        
+        {% for item in question.choice_set.all %}
+            <div class="form-check">
+                <input type="radio" name="choice" 
+                    id="id_choice_{{ forloop.counter}}" 
+                    value="{{ item.id }}"
+                    class="form-check-input">
+                <label for="id_choice_{{ forloop.counter }}" 
+                    class="form-check-label">
+                    {{ forloop.counter }} {{ item.choice_text }}
+                </label>
+            </div>
+        {% empty %}
+                <p>No choices for this question.</p>
+        {% endfor %}
+
+    </fieldset>
+    <button type="submit" class="btn btn-primary">Vote</button>
+  </form>
+
+{% endblock content %}

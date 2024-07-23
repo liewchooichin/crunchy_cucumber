@@ -27,4 +27,8 @@ urlpatterns = [
      path("question_detail/<int:question_id>/", 
           polls_views.question_detail, 
          name="question_detail"),
+     # vote for a question, display the detail of a question
+     path("question_vote/<int:question_id>/",
+          polls_views.question_vote,
+          name="question_vote"),
 ]
