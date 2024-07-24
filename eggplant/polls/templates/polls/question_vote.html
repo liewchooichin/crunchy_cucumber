@@ -8,7 +8,10 @@
 {% block content %}
   <h1>Vote</h1>
   
-  <form action="{% url 'polls:question_vote' question.id %}" method="POST">
+  <form 
+    action="{% url 'polls:vote' question.id %}" 
+    method="POST"
+  >
     {% csrf_token %}
     <fieldset>
       <legend><h1>{{ question.question_text }}</h1></legend>

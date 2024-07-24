@@ -11,16 +11,10 @@ app_name = "polls"
 
 # URLs
 urlpatterns = [
-    # homepage: /polls/
-    path("", polls_views.index, 
+     # homepage: /polls/
+     path("", polls_views.index, 
          name="index"),
-    # results of a question: /<int:question_id>/results/
-    path("<int:question_id>/results/", polls_views.results, 
-         name="results"),
-    # vote on a question: /<int:question_id>/vote/
-    path("<int:question_id>/vote/", polls_views.vote, 
-         name="vote"),
-     # list the questions
+     # display list the questions
      path("question_list/", polls_views.question_list,
           name="question_list"),
      # detail of question: /polls/5
@@ -31,4 +25,11 @@ urlpatterns = [
      path("question_vote/<int:question_id>/",
           polls_views.question_vote,
           name="question_vote"),
+     # vote on a question: /<int:question_id>/vote/
+     # this is used in the from action="polls:vote question.id"
+     path("<int:question_id>/vote/", polls_views.vote, 
+         name="vote"),
+     # results of a question: /<int:question_id>/results/
+     path("<int:question_id>/vote_results/", polls_views.vote_results, 
+         name="vote_results"),
 ]

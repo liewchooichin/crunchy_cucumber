@@ -14,6 +14,36 @@ About the **poll** application,
 
 # My Notes
 
+## Using **coverage**
+
+Run the **coverage** like this:
+
+```
+coverage run manage.py test polls.tests.test_question
+
+coverage html
+```
+
+
+
+## Saving object with F() and retrieve the object again
+
+24 Jul, Thu
+
+When an object with saved with `django.db.models.F`, the object is in database.
+The latest value of the object is in database also. If we need the value of the object, we need to retrive the object again.
+
+```
+print(f"\tCurrent votes: {selected_choice.votes}")
+>>> 10
+selected_choice.votes = F("votes") + 1
+selected_choice.save()
+# After save, we have to retrieve the object again to get
+# the latest state of the db.
+selected_choice = Choice.objects.get(id=selected_choice.id)
+print(f"\tAfter votes: {selected_choice.votes}")
+>>> 11
+```
 
 ## collectstatic
 

@@ -1,0 +1,49 @@
+<!--polls/index.html-->
+{% extends "base.html" %}
+
+{% block title %}
+  {{ block.super }} {{ title }}
+{% endblock title %}
+
+{% block content %}
+  <h1>Results to Question</h1>
+
+  <h2>{{ question.question_text }}</h2>
+
+  <!--Table of result-->
+  <table class="table table-bordered border-dark table-sm">
+    <caption>Results of votes</caption>
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Choice</th>
+            <th scope="col">Number of votes</th>
+        </tr>
+    </thead>
+    <tbody class="table-group-divider">
+        {% for choice in question.choice_set.all %}
+        <tr>
+            <th scope="row">{{ forloop.counter }}
+            <td>{{ choice.choice_text }}</td>
+            <td>{{ choice.votes }}</td>
+        </tr>
+        {% empty %}
+        <tr span="3">
+            No choices for this question.
+        </tr>
+        {% endfor %}
+    </tbody>
+  </table>
+
+  <!--Vote again button-->
+  <p>
+    <a class="btn btn-primary"
+        href="{% url 'polls:question_vote' question.id %}">
+        Vote again?
+    </a>
+    <a class="btn btn-primary"
+    href="{% url 'polls:question_list' %}">
+    Back to questions
+</a>
+  </p>
+{% endblock content %}
