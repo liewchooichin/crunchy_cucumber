@@ -1,6 +1,6 @@
 <!--polls/index.html-->
 {% extends "base.html" %}
-
+{% load static %}
 {% block title %}
   {{ block.super }} {{ title }}
 {% endblock title %}
@@ -9,6 +9,25 @@
   <h1>Poll question</h1>
 
   <p>Number of questions: {{ latest_question_list.count }}</p>
+
+  <!--Display all question or recent question only-->
+  <div class="form-check">
+    <!--script defer src="{% static 'question_list.js' %}"-->
+    <form id="id_recent_form"
+      action="{% url 'polls:question_list' %}" 
+      method="POST"
+      enctype="application/x-www-form-urlencoded">
+      {% csrf_token %}
+      <input class="form-check-input" type="checkbox" role="switch"   
+        id="id_recent_box" name="recent" value="1">
+      <label class="form-check-label" for="id_display">
+        List recent questions only</label>
+        <button id="id_recent_btn" type="submit">Recent questions</button>
+    </form>
+    <script defer src="{% static 'polls/question_list.js' %}">
+    </script>
+  </div>
+  
 
   {% if latest_question_list %}
     <ul class="list-group">

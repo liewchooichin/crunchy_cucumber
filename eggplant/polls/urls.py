@@ -14,9 +14,12 @@ urlpatterns = [
      # homepage: /polls/
      path("", polls_views.index, 
          name="index"),
-     # display list the questions
+     # display list the questions--all questions
      path("question_list/", polls_views.question_list,
           name="question_list"),
+     # display only the latest 5 questions
+     #path("question_list/<int:id_recent>/", polls_views.question_list,
+     #     name="question_list"),
      # detail of question: /polls/5
      path("question_detail/<int:question_id>/", 
           polls_views.question_detail, 

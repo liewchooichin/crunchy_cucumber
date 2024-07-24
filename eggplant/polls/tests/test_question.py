@@ -36,23 +36,30 @@ class TestQuestion(TestCase):
         """Create a question that is not recent
             and create a question that is recent
         """
-        # this is a 1 day old question
+        # this is an old question: false
         self.old_question = Question.objects.create(
             question_text="Old question",
-            pub_date=datetime.now()-timedelta(days=1)
+            pub_date=datetime.now()-timedelta(days=7, seconds=1)
         )
+        
         print(f"\t{self.old_question.pub_date=}")
-        # this is a question that is 1 day in advance
-        self.new_question = Question.objects.create(
+        # this is a question with future dates: false
+        self.future_question = Question.objects.create(
             question_text="New question",
-            pub_date=datetime.now()+timedelta(days=1)
+            pub_date=datetime.now()+timedelta(days=7, seconds=1)
         )
-        print(f"\t{self.new_question.pub_date=}")
-        # assert old recent is talse
+        print(f"\t{self.future_question.pub_date=}")
+        # this is a question published within the last day
+        self.one_day_old_question = Question.objects.create(
+            question_text="One day old question",
+            pub_date=datetime.now()-timedelta(hours=23, minutes=59, seconds=59)
+        )
+        # old question
         self.assertFalse(self.old_question.was_published_recently())
-        # assert new recent is true
-        self.assertTrue(self.new_question.was_published_recently())
-
+        # question in future date 
+        self.assertFalse(self.future_question.was_published_recently())
+        # question within the recent test period
+        self.assertTrue(self.one_day_old_question.was_published_recently())
 
     def test_question_list_view(self):
         """Test question list view"""
@@ -76,6 +83,12 @@ class TestQuestion(TestCase):
         self.assertIn(member=self.test_question.question_text,
                       container=str(response.content),
                       msg="Test question appear in context")
+        # validate the query set in the context is the same
+        # as the test question
+        self.assertQuerySetEqual(
+            qs = response.context["latest_question_list"],
+            values = [self.test_question]
+        )
 
     def test_question_detail_view(self):
         # test that question detail view with the test question

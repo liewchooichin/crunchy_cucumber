@@ -20,12 +20,12 @@
           <p><strong>{{ error_message }}</strong></p>
         {% endif %}
         
-        
         {% for item in question.choice_set.all %}
             <div class="form-check">
                 <input type="radio" name="choice" 
                     id="id_choice_{{ forloop.counter}}" 
                     value="{{ item.id }}"
+                    required
                     class="form-check-input">
                 <label for="id_choice_{{ forloop.counter }}" 
                     class="form-check-label">
@@ -37,7 +37,17 @@
         {% endfor %}
 
     </fieldset>
+      <!-- if there are choices -->
+  {% if question.choice_set.count == 0 %}
+  <a 
+    class="btn btn-primary"
+    href="{% url 'polls:question_list' %}"
+  >
+    Back to questions
+  </a>
+  {% else %}
     <button type="submit" class="btn btn-primary">Vote</button>
+  {% endif %}
   </form>
 
 {% endblock content %}

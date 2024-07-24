@@ -17,10 +17,25 @@ def index(request):
     return HttpResponse(template.render(context, request))
 
 
-def question_list(request):
+def question_list(request, recent=None):
     """List of questions"""
-    latest_question_list = Question.objects.order_by("-pub_date")[:5]
+    # latest question only
+    # request.POST.get('recent')='1'
+    if request.POST.get("recent") == "1":
+        latest_question_list = Question.objects.order_by("-pub_date")[:2]
+    else:
+        # request.POST.get('recent')=None
+        # all questions
+        latest_question_list = Question.objects.order_by("-pub_date")
+    
     template = loader.get_template("polls/question_list.html")
+    # check for display all question or only recent question
+    print(f"\t{request=}")
+    print(f"\t{request.POST.get('recent')=}")
+    # request=<WSGIRequest: POST '/polls/question_list/'>
+    # either POST or GET will give the same value
+    # request.POST.get('recent')='1'
+    # request.POST.get('recent')=None
     context = {
         "title": "Question list",
         "latest_question_list": latest_question_list,

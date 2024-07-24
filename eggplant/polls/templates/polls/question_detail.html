@@ -28,4 +28,22 @@
     </p>
   {% endif %}
 
+  <p>
+  <!--back to main listing-->
+  <a 
+    class="btn btn-primary"
+    href="{% url 'polls:question_list' %}"
+  >
+    Back to questions
+  </a>
+  <!-- if there are choices -->
+  {% if question.choice_set.count > 0 %}
+  <a 
+    class="btn btn-primary"
+    href="{% url 'polls:question_vote' question.id %}"
+  >
+    I want to vote
+  </a>
+  {% endif %}
+  </p>
 {% endblock content %}

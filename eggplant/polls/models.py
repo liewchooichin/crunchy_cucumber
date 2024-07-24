@@ -18,10 +18,17 @@ class Question(models.Model):
     id = models.SmallAutoField(primary_key=True)
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField(verbose_name="date published")
-
+    
     def was_published_recently(self) -> bool:
         """Whether the publication date is recent or not."""
-        recent = self.pub_date >= (datetime.now() - timedelta(days=1))
+        # Recent is true when the question is published within 7 days,
+        # publication date cannot be in future date
+        recent = False
+        if (
+            (datetime.today() - timedelta(days=7)) <= self.pub_date \
+              <= datetime.today()
+           ):
+            recent = True
         return recent
 
     def __str__(self):
