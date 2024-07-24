@@ -9,13 +9,50 @@ from polls.models import Question, Choice
 class TestQuestion(TestCase):
     """Test the question of the polls app"""
     def setUp(self):
+        """Set up the question test data"""
         self.test_question = Question.objects.create(
-            question_text = "Test question 1",
+            question_text="Test question 1",
             pub_date=datetime.now(),
         )
 
     def tearDown(self):
         pass
+
+    def test_question_str(self):
+        """Test the return str"""
+        self.long_question = Question.objects.create(
+            # more than 30 chars, the __str__ is supposed to limit
+            # the return string to only 30 chars
+            id=3003, # an unlikely id
+            question_text="1234567890 1234567890 1234567890 1234567890",
+            pub_date=datetime.now(),
+        )
+        print(f"\t{self.long_question}")
+        question_str = "Question 3003, 1234567890 1234567890 12345678"
+        self.assertEqual(first=question_str, second=self.long_question.__str__())
+
+    def test_published_recently(self):
+        """Test the publication date is recent or not"""
+        """Create a question that is not recent
+            and create a question that is recent
+        """
+        # this is a 1 day old question
+        self.old_question = Question.objects.create(
+            question_text="Old question",
+            pub_date=datetime.now()-timedelta(days=1)
+        )
+        print(f"\t{self.old_question.pub_date=}")
+        # this is a question that is 1 day in advance
+        self.new_question = Question.objects.create(
+            question_text="New question",
+            pub_date=datetime.now()+timedelta(days=1)
+        )
+        print(f"\t{self.new_question.pub_date=}")
+        # assert old recent is talse
+        self.assertFalse(self.old_question.was_published_recently())
+        # assert new recent is true
+        self.assertTrue(self.new_question.was_published_recently())
+
 
     def test_question_list_view(self):
         """Test question list view"""
