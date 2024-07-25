@@ -11,21 +11,19 @@
   <p>Number of questions: {{ latest_question_list.count }}</p>
 
   <!--Display all question or recent question only-->
+  <!--The submit button can work, but the form submission will not work.-->
   <div class="form-check">
-    <!--script defer src="{% static 'question_list.js' %}"-->
     <form id="id_recent_form"
-      action="{% url 'polls:question_list' %}" 
+      action="{% url 'polls:question_list_recent' %}"
       method="POST"
       enctype="application/x-www-form-urlencoded">
       {% csrf_token %}
       <input class="form-check-input" type="checkbox" role="switch"   
-        id="id_recent_box" name="recent" value="1">
+        id="id_recent_box" name="recent">
       <label class="form-check-label" for="id_display">
-        List recent questions only</label>
-        <button id="id_recent_btn" type="submit">Recent questions</button>
+        Recent questions only</label>
+        <button id="id_recent_btn" type="submit">Submit</button>
     </form>
-    <script defer src="{% static 'polls/question_list.js' %}">
-    </script>
   </div>
   
 

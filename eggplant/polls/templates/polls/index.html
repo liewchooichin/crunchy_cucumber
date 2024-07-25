@@ -10,8 +10,15 @@
   <p>
     <ul class="list-group">
         <li class="list-group-item">
-          <a href="{% url 'polls:question_list' %}">Poll questions</a>
+          <a href="{% url 'polls:question_list' %}">
+            Poll questions</a>
         </li>
-    </ul>
+
+        <li class="list-group-item">
+          <a href="{% url 'polls:question_list_recent' %}">
+            Poll questions recent</a>
+        </li>
+
+      </ul>
   </p>
 {% endblock content %}

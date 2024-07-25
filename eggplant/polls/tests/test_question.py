@@ -12,11 +12,27 @@ class TestQuestion(TestCase):
         """Set up the question test data"""
         self.test_question = Question.objects.create(
             question_text="Test question 1",
-            pub_date=datetime.now(),
+            pub_date=datetime.today(),
         )
 
     def tearDown(self):
         pass
+
+    def test_question_data(self):
+        """Test that the test data is what was created
+            in the database.
+        """
+        question = Question.objects.create(
+            question_text = "question 1",
+            pub_date=datetime(year=2024, month=8, day=1),
+        )
+        
+        question_from_db = Question.objects.get(id=question.id)
+        
+        self.assertEqual(first=question.question_text,
+                         second=question_from_db.question_text)
+        self.assertEqual(first=question.pub_date,
+                         second=question_from_db.pub_date)
 
     def test_question_str(self):
         """Test the return str"""

@@ -18,8 +18,8 @@ urlpatterns = [
      path("question_list/", polls_views.question_list,
           name="question_list"),
      # display only the latest 5 questions
-     #path("question_list/<int:id_recent>/", polls_views.question_list,
-     #     name="question_list"),
+     path("question_list_recent/", polls_views.question_list_recent,
+          name="question_list_recent"),
      # detail of question: /polls/5
      path("question_detail/<int:question_id>/", 
           polls_views.question_detail, 
