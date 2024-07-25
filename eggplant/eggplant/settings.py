@@ -163,9 +163,11 @@ USE_TZ = False
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
-
+# Refer to files in one of the locations with an additional 
+# namespace, provide a prefix as (prefix, path) tuples.
 STATICFILES_DIRS = [
-    BASE_DIR / "polls" / "static",
+    #BASE_DIR / "polls" / "static",
+    #("my_polls", "./polls/static/polls/"),
 ]
 
 STATIC_URL = 'static/'
