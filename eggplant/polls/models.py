@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib import admin
 
 # other libraries
 from datetime import date, datetime, timedelta
@@ -19,6 +20,13 @@ class Question(models.Model):
     question_text = models.CharField(max_length=200)
     pub_date = models.DateTimeField(verbose_name="date published")
     
+    class Meta:
+        # order by latest pub_date
+        ordering = ["-pub_date"]
+
+    # decorator for was_published_recently
+    # need to use: from django.contrib import admin
+    @admin.display(boolean=True, ordering="pub_date", description="Recently added")
     def was_published_recently(self) -> bool:
         """Whether the publication date is recent or not."""
         # Recent is true when the question is published within 7 days,
@@ -41,6 +49,10 @@ class Choice(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     choice_text = models.CharField(max_length=200)
     votes = models.IntegerField(default=0)
+
+    class Meta:
+        # order by question id, then choice id
+        ordering = ["question", "id"]
 
     def __str__(self):
         """Return the Choice"""
