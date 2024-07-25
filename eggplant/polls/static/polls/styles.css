@@ -5,3 +5,9 @@
  :root {
     --bs-body-bg: var(--bs-gray-100);
   }
+  /* 
+   * Include a image
+   */
+   h1 {
+    background: lightgreen url("images/pumpkin.jpg") no-repeat;
+   }

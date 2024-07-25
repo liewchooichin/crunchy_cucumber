@@ -17,12 +17,12 @@ class TestChoice(TestCase):
         )
         # more than 30 chars, the __str__ is supposed to limit
         # the return string to only 30 chars
-        self.test_choice = Choice.objects.create(
+        self.test_choice_1 = Choice.objects.create(
             id=3003, # an unlikely id
             choice_text = "1234567890 1234567890 1234567890 1234567890",
             question = self.test_question
         )
-        self.test_choice = Choice.objects.create(
+        self.test_choice_2 = Choice.objects.create(
             id=3004, # an unlikely id
             choice_text = "1234567890 1234567890 1234567890 1234567890",
             question = self.test_question
@@ -59,7 +59,7 @@ class TestChoice(TestCase):
             limit the text length to 30 chars.
         """
         choice_str = "Choice 3003, 1234567890 1234567890 12345678"
-        self.assertEqual(first=choice_str, second=self.test_choice.__str__())
+        self.assertEqual(first=choice_str, second=self.test_choice_1.__str__())
 
     def test_empty_choices(self):
         """Test for empty choices. The page should show a message

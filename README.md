@@ -20,8 +20,6 @@ About the **poll** application,
 
 The **static** files setting is confusing. Now, I add a namespace to the **STATICFILES_DIRS**. The [**prefixes**](https://docs.djangoproject.com/en/5.0/ref/settings/#prefixes-optional) is explained in Django Docs.
 
-
-
 ```
 # The files are in actual location:
 # "./polls/static/polls" (./appname/static/appname) format
@@ -32,10 +30,17 @@ STATICFILES_DIRS = [ ]
 # Refer to the staticfiles like this:
 <link rel="stylesheet" href="{% static 'polls/styles.css' %}">
 <link rel="icon" href="{% static 'polls/favicon.svg' %}">
+
+# Make a directory "images/" under the "polls/static/polls".
+# So the directory is now like this "polls/static/polls/images/"
+# To refer to the image in styles.css:
+h1 {
+    background: lightgreen url("images/pumpkin.jpg") no-repeat;
+   }
 ```
 
 ```
-# This is one way.
+# This is another way.
 STATICFILES_DIRS = [
     #BASE_DIR / "polls" / "static",
     ("my_polls", "./polls/static/polls/"),
