@@ -97,6 +97,8 @@ In the **base.html**, remember to put in the static template tag at the end of t
 
 ## Run tests
 
+The **tests** folders, filenames and individual class and methods must be prefix with **test**.
+
 `python manage.py test polls.tests`
 
 
