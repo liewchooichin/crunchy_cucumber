@@ -14,6 +14,38 @@ About the **poll** application,
 
 # My Notes
 
+## Using namespace in STATICFILES_DIRS
+
+25 Jul, Thu
+
+The **static** files setting is confusing. Now, I add a namespace to the **STATICFILES_DIRS**. The [**prefixes**](https://docs.djangoproject.com/en/5.0/ref/settings/#prefixes-optional) is explained in Django Docs.
+
+
+
+```
+# The files are in actual location:
+# "./polls/static/polls" (./appname/static/appname) format
+
+# Do not specify the staticfiles_dirs
+STATICFILES_DIRS = [ ]
+
+# Refer to the staticfiles like this:
+<link rel="stylesheet" href="{% static 'polls/styles.css' %}">
+<link rel="icon" href="{% static 'polls/favicon.svg' %}">
+```
+
+```
+# This is one way.
+STATICFILES_DIRS = [
+    #BASE_DIR / "polls" / "static",
+    ("my_polls", "./polls/static/polls/"),
+]
+
+# Refer to the static files like this:
+<link rel="stylesheet" href="/static/my_polls/styles.css">
+```
+
+
 ## Using **coverage**
 
 Run the **coverage** like this:
