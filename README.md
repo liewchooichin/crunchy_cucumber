@@ -14,6 +14,15 @@ About the **poll** application,
 
 # My Notes
 
+## Default admin template directory
+
+Custom Admin site is **not working**.
+Create a **admin** inside the **polls templates**.
+`/polls/templates/admin/`.
+
+Default templates can be found at [django/contrib/admin/templates](https://github.com/django/django/blob/main/django/contrib/admin/templates).
+
+
 ## Using namespace in STATICFILES_DIRS
 
 25 Jul, Thu

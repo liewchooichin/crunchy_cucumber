@@ -3,6 +3,14 @@ from django.contrib import admin
 # Register your models here.
 from .models import Question, Choice
 
+# Custom AdminSite
+# This does not work at all
+class MyAdminSite(admin.AdminSite):
+    """Custom AdminSite"""
+    site_title = "Eggplant"
+    site_header = "Eggplant"
+    app_index_template = "/polls/admin/base_site.html"
+
 
 # Choices of inlines are:
 # admin.StackedInline
