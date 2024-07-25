@@ -19,6 +19,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+#from polls.admin import admin_site
+
 # Namespcae
 # The namespace is added to the include(). It is clearer
 # to add namespace in include() because it can be seen
@@ -26,14 +28,15 @@ from django.conf.urls.static import static
 # namespace.
 urlpatterns = [
     # default admin
-    path(route='admin/', view=admin.site.urls, name="admin"),
+    path(route='admin/', view=admin.site.urls),
     # django_browser_reload
     path(route="__reload__/", 
          view=include("django_browser_reload.urls")),
     # index homepage
     path(route="polls/", 
          view=include("polls.urls", namespace="polls")),
-    
+    # custom admin
+    #path("eggplant_admin/", admin_site.urls, name="eggplant_admin"),   
 ]
 
 

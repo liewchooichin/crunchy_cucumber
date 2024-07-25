@@ -1,15 +1,19 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import Question, Choice
+from polls.models import Question, Choice
 
 # Custom AdminSite
 # This does not work at all
-class MyAdminSite(admin.AdminSite):
-    """Custom AdminSite"""
-    site_title = "Eggplant"
-    site_header = "Eggplant"
-    app_index_template = "/polls/admin/base_site.html"
+# class MyAdminSite(admin.AdminSite):
+#     """Custom AdminSite"""
+#     site_title = "Eggplant"
+#     site_header = "Eggplant"
+#     #app_index_template = "/polls/admin/base_site.html"
+
+# # register the admin class
+# admin_site = MyAdminSite(name="eggplant_admin")
+# admin_site.register(Question, Choice)
 
 
 # Choices of inlines are:

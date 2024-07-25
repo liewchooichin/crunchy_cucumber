@@ -39,9 +39,12 @@ CORS_ALLOW_ALL_ORIGINS: True
 # Application definition
 
 INSTALLED_APPS = [
-     # added by me, follow the configuration guide in microsoft
+    # added by me, follow the configuration guide in microsoft
     'whitenoise.runserver_nostatic',
+    # using custom admin
     'django.contrib.admin',
+    # simple admin config
+    #'django.contrib.admin.apps.SimpleAdminConfig',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -54,6 +57,8 @@ INSTALLED_APPS = [
     'corsheaders',
     # apps in the projects
     'polls.apps.PollsConfig',
+    # custom admin site
+    #'polls.apps.MyAdminConfig',
 ]
 
 # Following the cors example
