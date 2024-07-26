@@ -19,7 +19,25 @@
           <a href="{% url 'polls:question_list_recent' %}">
             Poll questions recent</a>
         </li>
+
+        <li class="list-group-item">
+          <a href="{% url 'polls:question_list_htmx' %}">
+            Poll questions htmx</a>
+        </li>
       </ul>
+  </p>
+  <p>
+    <h3>Search questions</h3>
+    <form class="d-flex" role="search"
+      method="GET" action="{% url 'polls:search_results' %}"
+    >
+      <input class="form-control me-2" type="search" 
+      placeholder="Search" aria-label="Search" 
+      name="search_text">
+      <button class="btn btn-outline-success" type="submit">
+        Search
+      </button>
+    </form>
   </p>
   <div class="row">
     <div class="col-md-2 offset-md-4">

@@ -1,0 +1,29 @@
+<!--polls/search_results.html-->
+{% extends "base.html" %}
+
+{% block title %}
+  {{ block.super }} {{ title }}
+{% endblock title %}
+
+{% block content %}
+  <h1>Search results</h1>
+  <p>Results for <br>
+    {{ search_text }}
+  </p>
+
+  <ul class="list-group">
+    {% for result in results %}
+    <li class="list-group-item">
+        {{ forloop.counter }}. {{ result.question_text }}
+    </li>
+    {% empty %}
+    <li class="list-group-item">
+        No results found.
+    </li>
+    {% endfor %}
+  </ul>
+
+  <a class="btn btn-primary" href="{% url 'polls:index' %}">
+    Back
+  </a>
+{% endblock content %}

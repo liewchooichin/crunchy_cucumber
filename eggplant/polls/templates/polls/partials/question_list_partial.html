@@ -1,0 +1,21 @@
+<!--question list using partial view-->
+<ul class="list-group">
+    {% for question in questions %}
+        <li class="list-group-item">
+            <div>
+            {{ question.question_text }}<br>
+            Number of choices: {{question.choice_set.count}}<br>
+            <button
+                hx-post="{% url 'polls:choices_partial' %}"
+                hx-trigger="click"
+                hx-target="id_choices_area"
+                hx-params="{{question.id}}"
+            >
+                View
+            </button>
+
+        </li>
+    {% empty %}
+        <li class="list-group-item">No questions available.</li>
+    {% endfor %}
+</ul>

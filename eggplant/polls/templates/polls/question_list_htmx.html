@@ -1,0 +1,18 @@
+<!--polls/question_list_htmx.html-->
+{% extends "base.html" %}
+
+{% block title %}
+  {{ block.super }} {{ title }}
+{% endblock title %}
+
+{% block content %}
+  <h1>Display question with HTMX</h1>
+
+  <div
+    hx-get="{% url 'polls:question_partial' %}"
+    hx-trigger="load"
+  >
+    <i>Loading question...</i>
+    <div id="id_question_area"></div>
+  </div>
+{% endblock content %}
