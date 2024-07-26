@@ -48,4 +48,10 @@ urlpatterns = [
      # search results
      path("search_results", polls_views.search_results,
           name="search_results"),
+     # click-to-edit
+     path("question_list_edit", polls_views.question_list_edit,
+          name="question_list_edit"),
+     # form for the click-to-edit
+     path("edit_question_form/<int:question_id>", polls_views.edit_question_form,
+          name="edit_question_form"),
 ]

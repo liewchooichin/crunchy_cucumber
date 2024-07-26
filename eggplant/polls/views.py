@@ -200,3 +200,44 @@ def search_results(request):
     }
     return render(request=request, template_name="polls/search_results.html",
                   context=context)
+
+
+def question_list_edit(request):
+    """Click-to-edit questions using HTMX"""
+    context = {
+        "title": "Click-to-edit question",
+        "questions": Question.objects.all(),
+    }
+    return render(request=request, 
+                  template_name="polls/question_list_edit.html",
+                  context=context)
+
+from polls.forms import QuestionForm
+
+def edit_question_form(request, question_id):
+    """Edit form fro the click-to-edit"""
+    question = get_object_or_404(Question, id=question_id)
+
+    # POST
+    if request.method == "POST":
+        # get the instance corresponding to the id
+        form = QuestionForm(request.POST, instance=question)
+        if form.is_valid():
+            form.save()
+            context = {"question": question}
+            return render(request=request, 
+                          template_name="polls/partials/edit_question.html", context=context)
+
+    # GET
+    elif request.method == "GET":
+        form = QuestionForm(instance=question)
+    
+    # It is a GET or the form is not valid
+    context = {
+        "question": question
+    }
+    return render(request=request, 
+                  template_name="polls/edit_question_form.html",
+                  context=context)
+    
+
