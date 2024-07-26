@@ -14,6 +14,13 @@ About the **poll** application,
 
 # My Notes
 
+## To monitor the stream logs in Azure
+
+Use the `az` cli.
+
+`az webapp log tail --name appname --resource-group myResourceGroup`
+
+
 ## Default admin template directory
 
 Custom Admin site is **not working**.
