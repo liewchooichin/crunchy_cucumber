@@ -19,16 +19,19 @@
           <a href="{% url 'polls:question_list_recent' %}">
             Poll questions recent</a>
         </li>
-
+        
+        <!--
         <li class="list-group-item">
           <a href="{% url 'polls:question_list_htmx' %}">
             Display questions using htmx</a>
         </li>
 
+        
         <li class="list-group-item">
           <a href="{% url 'polls:question_list_edit' %}">
             Click-to-edit questions using htmx</a>
         </li>
+        -->
       </ul>
   </p>
   <p>
@@ -45,12 +48,8 @@
     </form>
   </p>
   <div class="row">
-    <div class="col-md-2 offset-md-4">
-      <img src="{% static 'polls/pumpkin.jpg' %}" alt="pumpkin"
-       class="img-fluid" width="100%" height=auto>
-    </div>
-    <div class="col-md-2">
-      <img src="{% static 'polls/owl.jpg' %}" alt="pumpkin"
+    <div class="col-md-2 offset-md-5">
+      <img src="{% static 'polls/logo.svg' %}" alt="logo"
        class="img-fluid" width="100%" height=auto>
     </div>
   </div>

@@ -165,9 +165,12 @@ import urllib
 def search_results(request):
     """Search question from the keywords given by users"""
     search_text = request.GET.get("search_text", "")
+    print(f"Request: {request}")
     # A URL param was encoded. Turn it back into a regular
     # string.
-    search_text = urllib.parse.unquote(search_text)
+    print(f"\tBefore unquoting: {search_text}")
+    search_text = urllib.parse.unquote(search_text, encoding='utf-8')
+    print(f"\tAfter unquoting: {search_text}")
     # make lowercase for case insensitive search
     search_text = search_text.lower() 
     search_text = search_text.strip()
@@ -191,6 +194,7 @@ def search_results(request):
         # Search the Question filter with the query 
         # built with Q.
         results = Question.objects.filter(q)
+        print(f"Search results: {results}")
     
     # compose the context
     context = {
