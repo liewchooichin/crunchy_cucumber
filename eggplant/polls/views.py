@@ -127,3 +127,121 @@ def vote_results(request, question_id):
                   context=context)
 
 
+# HTMX tutorial
+def question_list_htmx(request):
+    """Display question using htmx"""
+    context = {"title": "List HTMX" }
+    return render(request=request, 
+                  template_name="polls/question_list_htmx.html", 
+                  context=context)
+
+import time
+def question_partial(request):
+    """Partial question to be loaded by HTMX"""
+    time.sleep(2) # 2 sec: to simulate lazy loading
+    context = {
+        "title": "Partial questions",
+        "questions": Question.objects.all(),
+    }
+    return render(request=request,
+                  template_name="polls/partials/question_list_partial.html",
+                  context=context
+                )
+
+
+def choices_partial(request, question_id):
+    """Display detail of question using htmx"""
+    context = {
+        "some_text": question_id,
+    }
+    return render(request=request,
+                  template_name="polls/partials/choices_partial.html",
+                  context=context)
+
+# For searching questions
+from django.db.models import Q
+import urllib
+
+def search_results(request):
+    """Search question from the keywords given by users"""
+    search_text = request.GET.get("search_text", "")
+    print(f"Request: {request}")
+    # A URL param was encoded. Turn it back into a regular
+    # string.
+    print(f"\tBefore unquoting: {search_text}")
+    search_text = urllib.parse.unquote(search_text, encoding='utf-8')
+    print(f"\tAfter unquoting: {search_text}")
+    # make lowercase for case insensitive search
+    search_text = search_text.lower() 
+    search_text = search_text.strip()
+
+    results = []
+
+    if search_text:
+        # split the text into individual terms
+        parts = search_text.split()
+        print(f"\t{parts=}")
+        # Build a Q objects OR-ed together to search
+        # for this term in the questions
+        # build the first query term
+        q = Q(question_text__icontains=parts[0])
+        print(f"\t{q=}")
+        # if there are more than one search terms
+        if len(parts) > 1:
+            for x in parts[1:]:
+                print(f"\t{x=}")
+                q |= Q(question_text__icontains=x)
+        # Search the Question filter with the query 
+        # built with Q.
+        results = Question.objects.filter(q)
+        print(f"Search results: {results}")
+    
+    # compose the context
+    context = {
+        "title": "Search results",
+        "search_text": search_text,
+        "results": results
+    }
+    return render(request=request, template_name="polls/search_results.html",
+                  context=context)
+
+
+def question_list_edit(request):
+    """Click-to-edit questions using HTMX"""
+    context = {
+        "title": "Click-to-edit question",
+        "questions": Question.objects.all(),
+    }
+    return render(request=request, 
+                  template_name="polls/question_list_edit.html",
+                  context=context)
+
+from polls.forms import QuestionForm
+
+def edit_question_form(request, question_id):
+    """Edit form fro the click-to-edit"""
+    question = get_object_or_404(Question, id=question_id)
+
+    # POST
+    if request.method == "POST":
+        # get the instance corresponding to the id
+        form = QuestionForm(request.POST, instance=question)
+        if form.is_valid():
+            form.save()
+            context = {"question": question}
+            return render(request=request, 
+                          template_name="polls/partials/edit_question.html", context=context)
+
+    # GET
+    elif request.method == "GET":
+        form = QuestionForm(instance=question)
+    
+    # It is a GET or the form is not valid
+    context = {
+        "question": question
+    }
+    return render(request=request, 
+                  template_name="polls/edit_question_form.html",
+                  context=context)
+    
+

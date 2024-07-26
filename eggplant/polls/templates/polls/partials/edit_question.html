@@ -1,0 +1,11 @@
+<!--click-to-edit a question-->
+
+<li id="id_question"_{{question.id}}>
+    {{ question.question_text }}
+    <a class="btn btn-primary"
+        hx-get="{% url 'polls:edit_question_form' question.id %}"
+        hx-target="#id_question_{{question.id}}"
+    >
+        Edit
+    </a>
+</li>

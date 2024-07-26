@@ -1,0 +1,35 @@
+<!--polls/question_list_edit.html-->
+<!--Edit with HTMX-->
+{% extends "base.html" %}
+
+{% block title %}
+  {{ block.super }} {{ title }}
+{% endblock title %}
+
+{% block content %}
+  <h1>Poll question</h1>
+
+  <p>Number of questions: {{ questions.count }}</p>
+
+  {% if questions %}
+    <ul class="list-group">
+        {% for question in questions %}
+            <!--li class="list-group-item mt-3"-->
+              {% include "polls/partials/edit_question.html" %}
+              <div class="d-flex-inline">
+              <a href="{% url 'polls:question_detail' question.id %}"
+                class="btn btn-info">
+                View detail      
+              </a>
+              <a href="{% url 'polls:question_vote' question.id %}"
+                class="btn btn-primary">
+                I want to vote      
+              </a>
+              <!--/div-->
+            </li>
+        {% endfor %}
+    </ul>
+  {% else %}
+    <p>No poll questions are available.</p>
+  {% endif %}
+{% endblock content %}

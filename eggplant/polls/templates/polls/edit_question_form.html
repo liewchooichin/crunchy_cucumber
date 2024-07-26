@@ -1,0 +1,13 @@
+<!--edit question form-->
+<li id="id_question_{{question.id}}">
+    <form>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button
+            hx-post="{% url 'polls/edit_question_form' %}"
+            hx-target="#id_question_{{question.id}}"
+        >
+            Save
+        </button>
+    </form>
+</li>
