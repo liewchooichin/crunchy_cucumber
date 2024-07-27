@@ -165,41 +165,33 @@ import urllib
 def search_results(request):
     """Search question from the keywords given by users"""
     search_text = request.GET.get("search_text", "")
-    print(f"Request: {request}")
+    # print(f"Request: {request}")
     # A URL param was encoded. Turn it back into a regular
     # string.
-    print(f"\tBefore unquoting: {search_text}")
+    # print(f"\tBefore unquoting: {search_text}")
     search_text = urllib.parse.unquote_plus(search_text, encoding='utf-8')
-    print(f"\tAfter unquoting: {search_text}")
+    # print(f"\tAfter unquoting: {search_text}")
     # make lowercase for case insensitive search
     search_text = search_text.lower() 
     search_text = search_text.strip()
-
-    # print the questions for debugging purposes
-    print("Questions")
-    for item in Question.objects.all():
-        print(f"\t{item}")
 
     results = []
 
     if search_text:
         # split the text into individual terms
         parts = search_text.split()
-        print(f"\t{parts=}")
         # Build a Q objects OR-ed together to search
         # for this term in the questions
         # build the first query term
         q = Q(question_text__icontains=parts[0])
-        print(f"\t{q=}")
         # if there are more than one search terms
         if len(parts) > 1:
             for x in parts[1:]:
-                print(f"\t{x=}")
                 q |= Q(question_text__icontains=x)
         # Search the Question filter with the query 
         # built with Q.
         results = Question.objects.filter(q)
-        print(f"Search results: {results}")
+        # print(f"Search results: {results}")
     
     # compose the context
     context = {

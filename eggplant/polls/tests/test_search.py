@@ -39,14 +39,14 @@ class TestSearchQuestion(TestCase):
         # get data to the search page
         data = {"search_text": "flower"}
         response = self.client.get(path=page_url, data=data)
-        print(f"\tResponse{response}")
+        # print(f"\tResponse{response}")
         self.assertEqual(first=200,
                          second=response.status_code,
                          msg="Successfully call search_results")
         # check the results in the response,
         # there should be no result.
         results = response.context["results"]
-        print(f"\tLen of results: {len(results)}")
+        # print(f"\tLen of results: {len(results)}")
         self.assertQuerySetEqual(qs=results, values=[])
         
     def test_search_results_1(self):
@@ -59,7 +59,7 @@ class TestSearchQuestion(TestCase):
         # The Client.get will do the necessary work for the query string.
         #search_text = urllib.parse.quote_plus("tree", encoding='utf-8')
         search_text = "tree tallest"
-        print(f"\tQuoted search text: {search_text}")
+        # print(f"\tQuoted search text: {search_text}")
         data = {"search_text": search_text}
         response = self.client.get(path=page_url, data=data)
         self.assertEqual(first=200,
@@ -67,10 +67,10 @@ class TestSearchQuestion(TestCase):
                          msg="Successfully call search_results")
         # check the results in the response,
         # there should be no result.
-        print(f"\tRequest: {response.request}")
-        print(f"\tSearch text: {response.context['search_text']}")
-        print(f"\tResults: {response.context['results']}")
-        print(f"\tLen of results: {len(response.context['results'])}")
+        # print(f"\tRequest: {response.request}")
+        # print(f"\tSearch text: {response.context['search_text']}")
+        # print(f"\tResults: {response.context['results']}")
+        # print(f"\tLen of results: {len(response.context['results'])}")
         self.assertQuerySetEqual(qs=response.context["results"], 
                              values=[self.test_1, self.test_2])
 
@@ -79,27 +79,21 @@ class TestSearchQuestion(TestCase):
             Search animal OR tallest will give two results.
         """
         page_url = reverse("polls:search_results")
-        # post data to the search page
-        # encode the search text
-        # It is not necessary to quote the query string in test.
-        # The Client.get will do the necessary work for the query string.
-        #search_text = urllib.parse.quote_plus("tree", encoding='utf-8')
         search_text = "animal tallest"
-        print(f"\tQuoted search text: {search_text}")
+        # print(f"\tQuoted search text: {search_text}")
         data = {"search_text": search_text}
         response = self.client.get(path=page_url, data=data)
         self.assertEqual(first=200,
                          second=response.status_code,
                          msg="Successfully call search_results")
         # check the results in the response,
-        # there should be no result.
-        print(f"\tRequest: {response.request}")
-        print(f"\tSearch text: {response.context['search_text']}")
-        print(f"\tResults: {response.context['results']}")
-        print(f"\tLen of results: {len(response.context['results'])}")
-        self.assertListEqual(list1=[], 
-                             list2=[self.test_1.question_text, self.test_2.question_text],
-                             msg="One result in search")
+        # there should be 2 result.
+        # print(f"\tRequest: {response.request}")
+        # print(f"\tSearch text: {response.context['search_text']}")
+        # print(f"\tResults: {response.context['results']}")
+        # print(f"\tLen of results: {len(response.context['results'])}")
+        self.assertQuerySetEqual(qs=response.context["results"], 
+                             values=[self.test_1, self.test_2],)
 
     def test_search_results_3(self):
         """Test the search with one result.
@@ -109,8 +103,8 @@ class TestSearchQuestion(TestCase):
         # It is not necessary to quote the query string in test.
         # The Client.get will do the necessary work for the query string.
         #search_text = urllib.parse.quote_plus("tree", encoding='utf-8')
-        search_text = "animal tallest"
-        print(f"\tQuoted search text: {search_text}")
+        search_text = "animal"
+        # print(f"\tQuoted search text: {search_text}")
         data = {"search_text": search_text}
         response = self.client.get(path=page_url, data=data)
         self.assertEqual(first=200,
@@ -118,9 +112,9 @@ class TestSearchQuestion(TestCase):
                          msg="Successfully call search_results")
         # check the results in the response,
         # there should be no result.
-        print(f"\tRequest: {response.request}")
-        print(f"\tSearch text: {response.context['search_text']}")
-        print(f"\tResults: {response.context['results']}")
-        print(f"\tLen of results: {len(response.context['results'])}")
-        self.assertListEqual(list1=[], list2=[self.test_2.question_text],
-                             msg="One result in search")
+        # print(f"\tRequest: {response.request}")
+        # print(f"\tSearch text: {response.context['search_text']}")
+        # print(f"\tResults: {response.context['results']}")
+        # print(f"\tLen of results: {len(response.context['results'])}")
+        self.assertQuerySetEqual(qs=response.context["results"], 
+                                 values=[self.test_2],)
