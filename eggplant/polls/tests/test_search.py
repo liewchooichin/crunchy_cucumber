@@ -47,8 +47,7 @@ class TestSearchQuestion(TestCase):
         # there should be no result.
         results = response.context["results"]
         print(f"\tLen of results: {len(results)}")
-        self.assertQuerySetEqual(qs=results, values=[],
-                             msg="No results in search")
+        self.assertQuerySetEqual(qs=results, values=[])
         
     def test_search_results_1(self):
         """Test the search with two results.
@@ -73,8 +72,7 @@ class TestSearchQuestion(TestCase):
         print(f"\tResults: {response.context['results']}")
         print(f"\tLen of results: {len(response.context['results'])}")
         self.assertQuerySetEqual(qs=response.context["results"], 
-                             values=[self.test_2.question_text, self.test_1.question_text],
-                             msg="One result in search")
+                             values=[self.test_1, self.test_2])
 
     def test_search_results_2(self):
         """Test the search with two results.
