@@ -14,7 +14,13 @@ About the **poll** application,
 
 # My Notes
 
-## To monitor the stream logs in Azure
+
+
+## Use **django.test.Client**
+
+Add **testserver** to **ALLOWED_HOSTS**  in the **.env**.
+
+## Monitor the stream logs in Azure
 
 Use the `az` cli.
 
