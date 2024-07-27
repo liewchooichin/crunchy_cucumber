@@ -169,6 +169,8 @@ def search_results(request):
     # A URL param was encoded. Turn it back into a regular
     # string.
     # print(f"\tBefore unquoting: {search_text}")
+    # Actually there is no need to unquote, because the
+    # request will return unquotedly strings automatically.
     search_text = urllib.parse.unquote_plus(search_text, encoding='utf-8')
     # print(f"\tAfter unquoting: {search_text}")
     # make lowercase for case insensitive search

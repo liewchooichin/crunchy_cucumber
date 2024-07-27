@@ -84,8 +84,7 @@ class TestSearchQuestion(TestCase):
         data = {"search_text": search_text}
         response = self.client.get(path=page_url, data=data)
         self.assertEqual(first=200,
-                         second=response.status_code,
-                         msg="Successfully call search_results")
+                         second=response.status_code,)
         # check the results in the response,
         # there should be 2 result.
         # print(f"\tRequest: {response.request}")
