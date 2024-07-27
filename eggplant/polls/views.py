@@ -169,11 +169,16 @@ def search_results(request):
     # A URL param was encoded. Turn it back into a regular
     # string.
     print(f"\tBefore unquoting: {search_text}")
-    search_text = urllib.parse.unquote(search_text, encoding='utf-8')
+    search_text = urllib.parse.unquote_plus(search_text, encoding='utf-8')
     print(f"\tAfter unquoting: {search_text}")
     # make lowercase for case insensitive search
     search_text = search_text.lower() 
     search_text = search_text.strip()
+
+    # print the questions for debugging purposes
+    print("Questions")
+    for item in Question.objects.all():
+        print(f"\t{item}")
 
     results = []
 
